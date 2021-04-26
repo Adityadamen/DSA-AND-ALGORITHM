@@ -1,0 +1,124 @@
+Consider a rat placed at (0, 0) in a square matrix of order N * N. It has to reach the destination at (N - 1, N - 1). Find all possible paths that the rat can take to reach from source to destination. The directions in which the rat can move are 'U'(up), 'D'(down), 'L' (left), 'R' (right). Value 0 at a cell in the matrix represents that it is blocked and rat cannot move to it while value 1 at a cell in the matrix represents that rat can be travel through it.
+Note: In a path, no cell can be visited more than one time.
+
+code:
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MAX 5
+vector<string> findPath(int m[MAX][MAX], int n);
+
+// Position this line where user code will be pasted.
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n;
+        cin >> n;
+
+        int m[MAX][MAX];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                cin >> m[i][j];
+            }
+        }
+         vector<string> result = findPath(m, n);
+        if (result.size() == 0)
+            cout << -1;
+        else
+            for (int i = 0; i < result.size(); i++) cout << result[i] << " ";
+        cout << endl;
+    }
+    return 0;
+}// } Driver Code Ends
+
+
+// User function template for C++
+
+// m is the given matrix and n is the order of matrix
+// MAX is the upper limit of N ie 5
+bool isSafe(int row,int col,int m[][MAX],int n,bool visited[][MAX])
+{
+    if(row==-1||row==n||col==n||col==-1||visited[row][col]||m[row][col]==0)
+    return false;
+    return true;
+    }
+void printPathUtil(int row, int col, int m[][MAX], 
+              int n, string& path, vector<string>& 
+               possiblePaths, bool visited[][MAX])
+{
+    // This will check the initial point
+    // (i.e. (0, 0)) to start the paths.
+    if (row == -1 || row == n || col == -1 
+               || col == n || visited[row][col] 
+                           || m[row][col] == 0)
+        return;
+
+    // If reach the last cell (n-1, n-1)
+    // then store the path and return
+    if (row == n - 1 && col == n - 1) {
+        possiblePaths.push_back(path);
+        return;
+    }
+
+    // Mark the cell as visite
+    visited[row][col] = true;
+     // Try for all the 4 directions (down, left, 
+    // right, up) in the given order to get the
+    // paths in lexicographical order
+
+    // Check if downward move is valid
+    if (isSafe(row + 1, col, m, n, visited))
+    {
+        path.push_back('D');
+        printPathUtil(row + 1, col, m, n,
+                 path, possiblePaths, visited);
+        path.pop_back();
+    }
+
+    // Check if the left move is valid
+    if (isSafe(row, col - 1, m, n, visited))
+    {
+        path.push_back('L');
+        printPathUtil(row, col - 1, m, n,
+                   path, possiblePaths, visited);
+        path.pop_back();
+    }
+     // Check if the right move is valid
+    if (isSafe(row, col + 1, m, n, visited)) 
+    {
+         path.push_back('R');
+        printPathUtil(row, col + 1, m, n,
+                   path, possiblePaths, visited);
+        path.pop_back();
+    }
+
+     // Check if the upper move is valid
+    if (isSafe(row - 1, col, m, n, visited))
+    {
+        path.push_back('U');
+        printPathUtil(row - 1, col, m, n,
+               path, possiblePaths, visited);
+        path.pop_back();
+    }
+
+    // Mark the cell as unvisited for 
+    // other possible paths
+    visited[row][col] = false;
+    }
+
+vector<string> findPath(int m[MAX][MAX], int n) {
+    vector<string> possiblePaths;
+    string path;
+    bool visited[n][MAX];
+    memset(visited, false, sizeof(visited));
+     
+    // Call the utility function to
+    // find the valid paths 
+    printPathUtil(0, 0, m, n, path, 
+                      possiblePaths, visited);
+return possiblePaths;
+}
