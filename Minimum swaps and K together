@@ -1,0 +1,65 @@
+â€‹Input : arr[ ] = {2, 1, 5, 6, 3} and K = 3
+Output : 1
+Explanation:
+To bring elements 2, 1, 3 together, swap element '5' with '3'
+such that final array will be- arr[] = {2, 1, 3, 6, 5}
+
+// to k together
+#include <iostream>
+using namespace std;
+
+
+int minSwap(int *arr, int n, int k);
+
+// Driver code
+int main() {
+
+	int t,n,k;
+	cin>>t;
+	while(t--)
+    {
+        cin>>n;
+        int arr[n];
+        for(int i=0;i<n;i++)
+            cin>>arr[i];
+        cin>>k;
+        cout << minSwap(arr, n, k) << "\n";
+    }
+	return 0;
+}
+// } Driver Code Ends
+
+
+int minSwap(int *arr, int n, int k) {
+   int cnt=0,bad=0;
+   for(int i=0;i<n;i++)
+   {
+       if(arr[i]<=k)
+       {
+           cnt++;
+       }
+       
+   }
+   for(int i=0;i<cnt;i++)
+   {
+       if(arr[i]>k)
+       {
+           bad++;
+       }
+   }
+   int ans = bad;
+   for(int i=0,j=cnt;j<n;i++,j++)
+   {
+       if(arr[i]>k)
+       {
+           bad--;
+       }
+       if(arr[j]>k)
+       {
+           bad++;
+       }
+       ans = min(ans,bad);
+   }
+   return ans;
+}
+   
