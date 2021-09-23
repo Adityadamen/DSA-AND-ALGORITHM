@@ -1,0 +1,12 @@
+    int minval=1,maxval=1,ans=INT_MIN;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(nums[i]<0)
+                swap(maxval,minval);
+            maxval=max(maxval*nums[i],nums[i]);
+            minval=min(minval*nums[i],nums[i]);
+            ans=max(ans,maxval);
+        }
+        
+        return ans;
+    }
