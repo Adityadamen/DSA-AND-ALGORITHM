@@ -1,0 +1,27 @@
+Q A Program to check if strings are rotations of each other or not
+
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+bool areRotation(string str1,string str2)
+{
+   if(str1.length()!=str2.length())
+   {
+       return -1;
+       }
+   string temp = str1+str1;
+   return (temp.find(str2)!=string::npos);
+   }
+  
+int main() {
+  string str1 = "AACD", str2 = "ACDA";
+   if (areRotation(str1, str2))
+     printf("Strings are rotations of each other");
+   else
+      printf("Strings are not rotations of each other");
+  return 0;
+}
+
+OUTPUT
+Strings are rotations of each other

@@ -1,0 +1,29 @@
+Next Permutation
+
+Implement the next permutation, which rearranges the list of numbers into Lexicographically next greater permutation of list of numbers. If such arrangement is not possible, it must be rearranged to the lowest possible order i.e. sorted in an ascending order. You are given an list of numbers arr[ ] of size N.
+
+code:
+vector<int> nextPermutation(int N, vector<int> arr){
+        int i=0,j=0;
+        for(i=arr.size()-1;i>0;i--)
+        {
+            if(arr[i]>arr[i-1])
+            break;
+        }
+        if(i==0)
+        {
+            reverse(arr.begin(),arr.end());
+            return arr;
+        }
+        int x=arr[i-1];
+        int smallest=i;
+        for(j=i+1;j<arr.size();j++)
+        {
+            if(arr[j]>x&&arr[j]<arr[smallest])
+            smallest=j;
+        }
+        swap(arr[smallest],arr[i-1]);
+        sort(arr.begin()+i,arr.end());
+      
+        return arr;
+    }
