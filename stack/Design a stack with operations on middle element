@@ -1,0 +1,64 @@
+#include <iostream>
+using namespace std;
+
+struct Node{
+    int data;
+    Node *next;
+    Node *prev;
+    Node(int num){
+        next=NULL;
+        prev=NULL;
+        data=num;
+    }
+};
+Node *head=NULL;
+Node *mid=NULL;
+int size=0;
+void push(int num){
+    Node *temp=new Node(num);
+    size++;
+    if(head==NULL){
+        head=temp;
+        mid=temp;
+        
+    }
+    else{
+        head->next=temp;
+        temp->prev=head;
+        head=head->next;
+        if(size%2==1)
+        mid=mid->next;
+    }
+}
+void pop(){
+    if(size>0){
+        Node*a=head;
+        cout<<a->data<<endl;
+        head->next=NULL;
+        head=head->prev;
+        
+        delete(a);
+        size--;
+    }
+    if(size%2==1){
+        mid=mid->prev;
+    }
+}
+void findMiddle(){
+    if(size!=0)
+    cout<<mid->data;
+}
+int main() {
+//	cout<<"GfG!";
+	int n;
+	cin>>n;
+	for(int i=0;i<n;i++){
+	    int a;
+	    cin>>a;
+	    push(a);
+	}
+	pop();
+	pop();
+	findMiddle();
+	return 0;
+}
